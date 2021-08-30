@@ -1,8 +1,8 @@
 FROM php:8.0-cli
-COPY index.php /usr/src/index.php
+COPY updater.php /usr/src/updater.php
 WORKDIR /usr/src/
 RUN apt update && apt install -y procps
-CMD ["php", "index.php"]
+CMD ["php", "updater.php"]
 
 #health check
 HEALTHCHECK --interval=1m --timeout=3s \
