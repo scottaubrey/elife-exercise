@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# create a window of around 20 seconds, to keep race conditions in check
+lowerDate=$(date -u -v-10S +'%Y-%m-%d %T')
+upperDate=$(date -u -v+10S +'%Y-%m-%d %T')
+
+# make curl request, test for exit code success
+content=$(curl -s http://localhost:8080/index.txt)
+if [[ $? != 0 ]]; then
+    echo "failed: http call was unsuccessful"
+    exit $?
+fi
+
+# test value returned is between the two values
+if [[ $content < $lowerDate ]]; then
+    echo "failed: $content is more than 10 seconds ago"
+    exit 1
+fi
+
+if [[ $content > $upperDate ]]; then
+    echo "failed: $content is more than 10 seconds in the future"
+    exit 1
+fi
+
+# this is pretty much it, success
+echo "success"

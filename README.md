@@ -16,7 +16,7 @@ docker build mynginx -t mynginx
 docker build php-updater -t php-updater
 ```
 
-Alternatively, using make run `make build` to build both images.
+Alternatively, using make run `make build` to build both images, or `make build-and-test` to run tests on the final images
 
 ## Run and test
 
@@ -32,6 +32,8 @@ retriveing the latest text file:
 ```
 curl http://localhost:8080/index.txt
 ```
+
+Alternatively, just run `make test` once the containers are up.
 
 You can then stop the containers, using docker stop:
 
