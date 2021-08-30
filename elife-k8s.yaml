@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elife
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      elife: web
+  template:
+    metadata:
+      labels:
+        elife: web
+    spec:
+      volumes:
+      - name: html
+        emptyDir: {}
+      containers:
+      - name: mynginx
+        image: ghcr.io/scottaubrey/mynginx:latest
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+      - name: php-updater
+        image: ghcr.io/scottaubrey/php-updater:latest
+        volumeMounts:
+        - name: html
+          mountPath: /var/www
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elife-entrypoint
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    elife: web
+  ports:
+  - port: 80
+    targetPort: 80
+    nodePort: 30001
