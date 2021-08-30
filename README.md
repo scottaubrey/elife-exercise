@@ -45,7 +45,8 @@ Alternatively, just run `make run`, and `make stop`, respectively.
 
 ## Deploy to nomad
 
-Before you start, make sure your nomad commandline is setup for your cluster (e.g. NOMAD_ADDR env var is set) and connected to consul
+Before you start, make sure your nomad commandline is setup for your nomad cluster (e.g. NOMAD_ADDR env var is set) and connected to consul.
+You also need to make sure you want the public image, otherwise you need to edit `elife.nomad` to point to the correct docker image.
 
 You can deploy straight from this repo:
 
