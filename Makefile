@@ -32,3 +32,6 @@ stop:
 
 test:
 	tests/e2e-test
+
+deploy:
+	nomad job run elife.nomad
