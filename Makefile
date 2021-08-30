@@ -19,6 +19,10 @@ build-and-test:
 	make test
 	docker stop mynginx-test php-updater-test
 
+push:
+	docker push ghcr.io/scottaubrey/php-updater
+	docker push ghcr.io/scottaubrey/mynginx
+
 run:
 	docker run --platform linux/amd64 --rm -d -v public:/usr/share/nginx/html --name mynginx -p 8080:80 mynginx
 	docker run --platform linux/amd64 --rm -d -v public:/var/www --name php-updater php-updater
