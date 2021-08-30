@@ -1,7 +1,7 @@
-FROM php:8.0-cli
+FROM php:8.0-cli-alpine
 COPY updater.php /usr/src/updater.php
 WORKDIR /usr/src/
-RUN apt update && apt install -y procps
+RUN apk add procps
 CMD ["php", "updater.php"]
 
 #health check
