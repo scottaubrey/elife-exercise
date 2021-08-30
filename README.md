@@ -42,3 +42,40 @@ docker stop mynginx php-updater
 ```
 
 Alternatively, just run `make run`, and `make stop`, respectively.
+
+## Deploy to nomad
+
+Before you start, make sure your nomad commandline is setup for your cluster (e.g. NOMAD_ADDR env var is set) and connected to consul
+
+You can deploy straight from this repo:
+
+```
+$ nomad job run elife.nomad
+==> 2021-08-30T09:52:35+01:00: Monitoring evaluation "a30937c6"
+    2021-08-30T09:52:35+01:00: Evaluation triggered by job "elife"
+==> 2021-08-30T09:52:36+01:00: Monitoring evaluation "a30937c6"
+    2021-08-30T09:52:36+01:00: Evaluation within deployment: "82f768b8"
+    2021-08-30T09:52:36+01:00: Evaluation status changed: "pending" -> "complete"
+==> 2021-08-30T09:52:36+01:00: Evaluation "a30937c6" finished with status "complete"
+==> 2021-08-30T09:52:36+01:00: Monitoring deployment "82f768b8"
+  ✓ Deployment "82f768b8" successful
+
+    2021-08-30T09:52:36+01:00
+    ID          = 82f768b8
+    Job ID      = elife
+    Job Version = 4
+    Status      = successful
+    Description = Deployment completed successfully
+
+    Deployed
+    Task Group  Auto Revert  Desired  Placed  Healthy  Unhealthy  Progress Deadline
+    elife-web   true         1        1       1        0          2021-08-30T08:53:27Z
+```
+
+Alternatively, just run `make deploy`
+
+You can find the allocated port via nomad or consul catalog, e.g. (assuming CONSUL_HTTP_ADDR env var set):
+
+```
+curl -s $CONSUL_HTTP_ADDR/v1/catalog/service/elife |  jq '.[0] | .ServiceAddress+":"+(.ServicePort|tostring)' -r
+```
