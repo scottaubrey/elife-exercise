@@ -33,5 +33,8 @@ stop:
 test:
 	tests/e2e-test
 
-deploy:
+deploy-nomad:
 	nomad job run elife.nomad
+
+deploy-k8s:
+	kubectl apply -f elife-k8s.yaml

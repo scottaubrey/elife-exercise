@@ -9,6 +9,7 @@ job "elife" {
     network {
       port "web-alt" {
         to = 80
+        static = 30001
       }
     }
 

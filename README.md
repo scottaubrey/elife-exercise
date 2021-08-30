@@ -73,10 +73,15 @@ $ nomad job run elife.nomad
     elife-web   true         1        1       1        0          2021-08-30T08:53:27Z
 ```
 
-Alternatively, just run `make deploy`
+Alternatively, just run `make deploy-nomad`. The webservice will be deployed on port 30001 (to mirror docker desktop k8s port range)
 
-You can find the allocated port via nomad or consul catalog, e.g. (assuming CONSUL_HTTP_ADDR env var set):
+## Deploy to k8s
 
-```
-curl -s $CONSUL_HTTP_ADDR/v1/catalog/service/elife |  jq '.[0] | .ServiceAddress+":"+(.ServicePort|tostring)' -r
+Before you start, make sure your kubectl is setup.
+You also need to make sure you want the public image, otherwise you need to edit `elife-k8s.yaml` to point to the correct docker image.
+
+You can deploy straight from this repo `kubectl load -f elife-k8s.yaml`
+
+Alternatively, just run `make deploy-k8s`. The webservice will be deployed on port 30001
+
 ```
