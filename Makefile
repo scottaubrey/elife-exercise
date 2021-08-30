@@ -1,8 +1,8 @@
 build-php-updater:
-	docker build php-updater -t php-updater
+	docker build php-updater -t php-updater -t ghcr.io/scottaubrey/php-updater
 
 build-nginx:
-	docker build mynginx -t mynginx
+	docker build mynginx -t mynginx -t ghcr.io/scottaubrey/mynginx
 
 build:
 	make build-php-updater
